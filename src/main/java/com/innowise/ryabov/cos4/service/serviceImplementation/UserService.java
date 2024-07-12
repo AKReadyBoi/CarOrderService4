@@ -1,6 +1,7 @@
 package com.innowise.ryabov.cos4.service.serviceImplementation;
 
 import com.innowise.ryabov.cos4.dto.UserDTO;
+import com.innowise.ryabov.cos4.entity.User;
 import com.innowise.ryabov.cos4.mapper.UserMapper;
 import com.innowise.ryabov.cos4.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,10 @@ public class UserService implements com.innowise.ryabov.cos4.service.UserService
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream().map(UserMapper.INSTANCE::userToUserDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
 }

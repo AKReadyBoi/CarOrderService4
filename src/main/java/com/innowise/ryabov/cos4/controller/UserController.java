@@ -1,11 +1,12 @@
 package com.innowise.ryabov.cos4.controller;
 
 import com.innowise.ryabov.cos4.dto.UserDTO;
+import com.innowise.ryabov.cos4.entity.User;
 import com.innowise.ryabov.cos4.service.serviceImplementation.UserService;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -20,5 +21,10 @@ public class UserController {
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+    @PostMapping("/saveUser/")
+    public HttpStatusCode saveUser(User user) {
+        userService.saveUser(user);
+        return HttpStatusCode.valueOf(201);
     }
 }

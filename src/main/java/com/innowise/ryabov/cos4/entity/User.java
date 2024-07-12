@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Entity
+@Data
 @Table(name = "users")
 public class User {
     @Id
