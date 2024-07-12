@@ -24,12 +24,19 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
     @PostMapping("/saveUser")
-    public ResponseEntity<Void> saveUser(@RequestBody User user) {
+    public ResponseEntity<HttpStatus> saveUser(@RequestBody User user) {
         try {
             userService.saveUser(user);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return ResponseEntity.ok(HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<User> updateEmployee(@PathVariable(value = "id") Long id, @RequestBody User userDetails)  {
+        User user = userService.getUserByID(id);
+        user.setFirstname(userDetails.getFirstname());
+        user.setLastname(userDetails.getLastname());
+        return ResponseEntity.ok(user);
     }
 }

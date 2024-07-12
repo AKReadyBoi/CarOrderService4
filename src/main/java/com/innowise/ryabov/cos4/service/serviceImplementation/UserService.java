@@ -27,4 +27,9 @@ public class UserService implements com.innowise.ryabov.cos4.service.UserService
         userRepository.save(user);
     }
 
+    @Override
+    public User getUserByID(long id) {
+        return userRepository.findById(id).orElseThrow(()->new IllegalArgumentException("User not found for this id :: " + id));
+    }
+
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> getAllUsers();
     void saveUser(User user);
+    User getUserByID(long id);
 }
