@@ -14,12 +14,12 @@ import java.util.Date;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String phone_number;
-    private Date creation_date;
-    private String passport_id;
-    private String driving_license_id;
+    Long id;
+    String firstname;
+    String lastname;
+    String email;
+    String phone_number;
+    Date creation_date;
+    String passport_id;
+    String driving_license_id;
 }
