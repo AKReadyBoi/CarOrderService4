@@ -1,11 +1,9 @@
 package com.innowise.ryabov.cos4.mapper;
 import com.innowise.ryabov.cos4.dto.UserDTO;
-import com.innowise.ryabov.cos4.entity.User;
+import com.innowise.ryabov.cos4.entity.Users;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-    UserDTO userToUserDTO(User user);
+    UserDTO userToUserDTO(Users user);
 }

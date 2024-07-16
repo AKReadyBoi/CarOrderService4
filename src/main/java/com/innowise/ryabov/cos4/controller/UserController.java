@@ -1,17 +1,12 @@
 package com.innowise.ryabov.cos4.controller;
 
 import com.innowise.ryabov.cos4.dto.UserDTO;
-import com.innowise.ryabov.cos4.entity.User;
-import com.innowise.ryabov.cos4.service.serviceImplementation.UserService;
+import com.innowise.ryabov.cos4.entity.Users;
+import com.innowise.ryabov.cos4.service.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
-
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,7 +19,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
     @PostMapping("/saveUser")
-    public ResponseEntity<HttpStatus> saveUser(@RequestBody User user) {
+    public ResponseEntity<HttpStatus> saveUser(@RequestBody Users user) {
         try {
             userService.saveUser(user);
             return ResponseEntity.ok(HttpStatus.CREATED);
@@ -32,11 +27,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @PutMapping("/employees/{id}")
-    public ResponseEntity<User> updateEmployee(@PathVariable(value = "id") Long id, @RequestBody User userDetails)  {
-        User user = userService.getUserByID(id);
-        user.setFirstname(userDetails.getFirstname());
-        user.setLastname(userDetails.getLastname());
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<Users> updateUser(@PathVariable(value = "id") Long id, @RequestBody Users userDetails)  {
+        Users user = userService.updateUser(id, userDetails);
         return ResponseEntity.ok(user);
+    }
+    @DeleteMapping("deleteUser/{id}")
+    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable(value = "id") Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
