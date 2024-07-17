@@ -4,6 +4,7 @@ import com.innowise.ryabov.cos4.entity.Users;
 import com.innowise.ryabov.cos4.mapper.UserMapper;
 import com.innowise.ryabov.cos4.repository.UserRepository;
 import com.innowise.ryabov.cos4.request.UserRequest;
+import com.innowise.ryabov.cos4.util.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -47,19 +48,19 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).save(any(Users.class));
     }
     @Test
-    void updateUserThrowsNullPointerException() {
-        Long id = 1L;
-        UserRequest request = new UserRequest(FIRST, LAST);
-        when(userRepository.findById(id)).thenReturn(null);
-        assertThrows(NullPointerException.class, () -> userService.updateUser(id,request));
-        verify(userRepository, times(1)).findById(id);
-    }
-    @Test
-    void deleteUserThrowsIllegalArgumentException() {
-        Long id = 1L;
-        doThrow(new IllegalArgumentException(String.valueOf(id)))
-                .when(userRepository).deleteById(id);
-        assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(id));
+        void updateUser_ThrowsUserNotFoundException() {
+            Long id = 1L;
+            UserRequest request = new UserRequest(FIRST, LAST);
+            when(userRepository.findById(id)).thenReturn(Optional.of(new Users()));
+            assertThrows(UserNotFoundException.class, () -> userService.updateUser(id,request));
+            verify(userRepository, times(1)).findById(id);
+        }
+        @Test
+        void deleteUser_ThrowsUserNotFoundException() {
+            Long id = 1L;
+            doThrow(new UserNotFoundException(String.valueOf(id)))
+                    .when(userRepository).deleteById(id);
+            assertThrows(UserNotFoundException.class, () -> userService.deleteUser(id));
         verify(userRepository, times(1)).deleteById(id);
     }
 
@@ -74,9 +75,7 @@ class UserServiceImplTest {
         user.setLastname(LAST);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         Users updatedUser = userService.updateUser(userId, userRequest);
-
         verify(userRepository, times(1)).findById(userId);
-
         assertEquals(TEST, updatedUser.getFirstname());
         assertEquals(TEST, updatedUser.getLastname());
     }
@@ -86,5 +85,18 @@ class UserServiceImplTest {
         Long userId = 1L;
         userService.deleteUser(userId);
         verify(userRepository, times(1)).deleteById(userId);
+    }
+
+    @Test
+    void getUser() {
+        Long userId = 1L;
+        userService.getUser(userId);
+        verify(userRepository, times(1)).findById(userId);
+    }
+    @Test
+    void getUser_UserNotFound_ThrowsUserNotFoundException() {
+        Long userId = 1L;
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, () -> userService.getUser(userId));
     }
 }

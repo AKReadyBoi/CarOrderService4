@@ -21,6 +21,10 @@ public class UserController {
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUser(id));
+    }
     @PostMapping("/save")
     public ResponseEntity<HttpStatus> saveUser(@RequestBody Users user) {
         userService.saveUser(user);
