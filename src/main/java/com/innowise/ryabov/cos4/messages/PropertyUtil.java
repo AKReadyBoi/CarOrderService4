@@ -1,5 +1,9 @@
 package com.innowise.ryabov.cos4.messages;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PropertyUtil {
     public static final String VALIDATION_MESSAGE = "Validation error(s): ";
 

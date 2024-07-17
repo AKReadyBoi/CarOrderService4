@@ -1,4 +1,4 @@
-package com.innowise.ryabov.cos4.service.serviceImplementation;
+package com.innowise.ryabov.cos4.service.impl;
 import com.innowise.ryabov.cos4.dto.UserDTO;
 import com.innowise.ryabov.cos4.entity.Users;
 import com.innowise.ryabov.cos4.mapper.UserMapper;
@@ -12,12 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
+    private static final String LAST = "last";
+    private static final String TEST = "test";
+    private static final String FIRST = "first";
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -43,22 +46,39 @@ class UserServiceImplTest {
         userService.saveUser(user);
         verify(userRepository, times(1)).save(any(Users.class));
     }
+    @Test
+    void updateUserThrowsNullPointerException() {
+        Long id = 1L;
+        UserRequest request = new UserRequest(FIRST, LAST);
+        when(userRepository.findById(id)).thenReturn(null);
+        assertThrows(NullPointerException.class, () -> userService.updateUser(id,request));
+        verify(userRepository, times(1)).findById(id);
+    }
+    @Test
+    void deleteUserThrowsIllegalArgumentException() {
+        Long id = 1L;
+        doThrow(new IllegalArgumentException(String.valueOf(id)))
+                .when(userRepository).deleteById(id);
+        assertThrows(IllegalArgumentException.class, () -> userService.deleteUser(id));
+        verify(userRepository, times(1)).deleteById(id);
+    }
 
     @Test
     void updateUser() {
         Long userId = 1L;
-        String test = "test";
         UserRequest userRequest = mock(UserRequest.class);
-        when(userRequest.firstname()).thenReturn(test);
-        when(userRequest.lastname()).thenReturn(test);
+        when(userRequest.firstname()).thenReturn(TEST);
+        when(userRequest.lastname()).thenReturn(TEST);
         Users user = new Users();
-        user.setFirstname("first");
-        user.setLastname("fast");
+        user.setFirstname(FIRST);
+        user.setLastname(LAST);
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         Users updatedUser = userService.updateUser(userId, userRequest);
+
         verify(userRepository, times(1)).findById(userId);
-        assertEquals(test, updatedUser.getFirstname());
-        assertEquals(test, updatedUser.getLastname());
+
+        assertEquals(TEST, updatedUser.getFirstname());
+        assertEquals(TEST, updatedUser.getLastname());
     }
 
     @Test

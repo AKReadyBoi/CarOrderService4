@@ -1,4 +1,4 @@
-package com.innowise.ryabov.cos4.service.serviceImplementation;
+package com.innowise.ryabov.cos4.service.impl;
 
 import com.innowise.ryabov.cos4.dto.UserDTO;
 import com.innowise.ryabov.cos4.entity.Users;
@@ -7,12 +7,8 @@ import com.innowise.ryabov.cos4.repository.UserRepository;
 import com.innowise.ryabov.cos4.request.UserRequest;
 import com.innowise.ryabov.cos4.service.UserService;
 import jakarta.transaction.Transactional;
-import lombok.val;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,7 +26,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll()
                 .stream()
                 .map(mapper::userToUserDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
