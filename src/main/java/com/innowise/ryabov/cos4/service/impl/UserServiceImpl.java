@@ -1,18 +1,17 @@
-package com.innowise.ryabov.cos4.service.serviceImplementation;
-
+package com.innowise.ryabov.cos4.service.impl;
 import com.innowise.ryabov.cos4.dto.UserDTO;
 import com.innowise.ryabov.cos4.entity.Users;
 import com.innowise.ryabov.cos4.mapper.UserMapper;
+import com.innowise.ryabov.cos4.messages.PropertyUtil;
 import com.innowise.ryabov.cos4.repository.UserRepository;
 import com.innowise.ryabov.cos4.request.UserRequest;
 import com.innowise.ryabov.cos4.service.UserService;
+import com.innowise.ryabov.cos4.util.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,7 +29,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll()
                 .stream()
                 .map(mapper::userToUserDTO)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -41,7 +40,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Users updateUser(Long id, UserRequest userRequest) {
         Users user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found for this id : " + id));
+                .orElseThrow(
+                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE + id)
+                );
         user.setFirstname(userRequest.firstname());
         user.setLastname(userRequest.lastname());
         return user;
@@ -49,7 +50,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        userRepository.deleteAllById(Collections.singleton(id));
+        val user = userRepository.findById(id)
+                .orElseThrow(
+                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE)
+                );
+        userRepository.deleteById(user.getId());
+    }
+
+    @Override
+    public UserDTO getUser(Long id) {
+        return mapper.userToUserDTO(userRepository.findById(id)
+                .orElseThrow(
+                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE)
+                ));
     }
 
 }

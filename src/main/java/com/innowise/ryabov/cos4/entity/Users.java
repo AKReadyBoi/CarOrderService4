@@ -18,8 +18,8 @@ public class Users {
     String firstname;
     String lastname;
     String email;
-    String phone_number;
-    Date creation_date;
-    String passport_id;
-    String driving_license_id;
+    String phoneNumber;
+    Date creationDate;
+    String passportId;
+    String drivingLicenseId;
 }
