@@ -1,4 +1,5 @@
 package com.innowise.ryabov.cos4.controller;
+
 import com.innowise.ryabov.cos4.messages.PropertyUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

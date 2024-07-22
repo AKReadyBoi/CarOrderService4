@@ -49,7 +49,7 @@ class UserServiceImplTest {
 
         verify(userRepository, times(1)).save(any(Users.class));
     }
-    @Test
+        @Test
         void updateUser_ThrowsUserNotFoundException() {
             Long id = 1L;
             UserRequest request = new UserRequest(FIRST, LAST);
@@ -77,13 +77,12 @@ class UserServiceImplTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        Users updatedUser = userService.updateUser(userId, userRequest);
+        UserDTO updatedUser = userService.updateUser(userId, userRequest);
 
         verify(userRepository, times(1)).findById(userId);
         assertEquals(TEST, updatedUser.getFirstname());
         assertEquals(TEST, updatedUser.getLastname());
     }
-
     @Test
     void deleteUser() {
         Long userId = 1L;
@@ -96,7 +95,6 @@ class UserServiceImplTest {
 
         verify(userRepository, times(1)).deleteById(userId);
     }
-
     @Test
     void getUser() {
         Long userId = 1L;

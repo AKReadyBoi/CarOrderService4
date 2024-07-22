@@ -10,7 +10,6 @@ import com.innowise.ryabov.cos4.util.UserNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.val;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -18,12 +17,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
-
     public UserServiceImpl(UserRepository userRepository, UserMapper mapper) {
         this.userRepository = userRepository;
         this.mapper = mapper;
     }
-
     @Override
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
@@ -38,14 +35,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Users updateUser(Long id, UserRequest userRequest) {
+    public UserDTO updateUser(Long id, UserRequest userRequest) {
         Users user = userRepository.findById(id)
                 .orElseThrow(
                         () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE + id)
                 );
         user.setFirstname(userRequest.firstname());
         user.setLastname(userRequest.lastname());
-        return user;
+        return mapper.userToUserDTO(user);
     }
 
     @Override

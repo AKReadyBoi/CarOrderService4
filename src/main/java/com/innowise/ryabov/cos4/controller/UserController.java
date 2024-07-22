@@ -31,8 +31,8 @@ public class UserController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
     @PutMapping("/update/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable(value = "id") Long id, @RequestBody UserRequest userDetails) {
-        Users user = userService.updateUser(id, userDetails);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable(value = "id") Long id, @RequestBody UserRequest userDetails) {
+        UserDTO user = userService.updateUser(id, userDetails);
         return ResponseEntity.ok(user);
     }
     @DeleteMapping("/delete/{id}")
