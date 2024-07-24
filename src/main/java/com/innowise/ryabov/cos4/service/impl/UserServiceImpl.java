@@ -8,21 +8,17 @@ import com.innowise.ryabov.cos4.request.UserRequest;
 import com.innowise.ryabov.cos4.service.UserService;
 import com.innowise.ryabov.cos4.util.UserNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 @Transactional
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
-
-    public UserServiceImpl(UserRepository userRepository, UserMapper mapper) {
-        this.userRepository = userRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -33,36 +29,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(Users user) {
-        userRepository.save(user);
+    public void saveUser(UserRequest user) {
+        userRepository.save(mapper.userRequestToUser(user));
     }
 
     @Override
-    public Users updateUser(Long id, UserRequest userRequest) {
-        Users user = userRepository.findById(id)
-                .orElseThrow(
-                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE + id)
-                );
+    public UserDTO updateUser(Long id, UserRequest userRequest) {
+        Users user = findSafe(id);
         user.setFirstname(userRequest.firstname());
         user.setLastname(userRequest.lastname());
-        return user;
+        return mapper.userToUserDTO(user);
     }
 
     @Override
     public void deleteUser(Long id) {
-        val user = userRepository.findById(id)
-                .orElseThrow(
-                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE)
-                );
+        val user = findSafe(id);
         userRepository.deleteById(user.getId());
     }
 
     @Override
     public UserDTO getUser(Long id) {
-        return mapper.userToUserDTO(userRepository.findById(id)
-                .orElseThrow(
-                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE)
-                ));
+        return mapper.userToUserDTO(findSafe(id));
     }
 
+    private Users findSafe(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(
+                        () -> new UserNotFoundException(PropertyUtil.USER_NOT_FOUND_MESSAGE)
+                );
+    }
 }
