@@ -1,13 +1,10 @@
 package com.innowise.ryabov.cos4.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,8 +18,11 @@ public class Car
     Long id;
     String brand;
     String model;
-    Date yearOfProduction;
+    LocalDate yearOfProduction;
     String plateNumber;
     Boolean isAvailable;
     BigDecimal dailyFee;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    Users user;
 }

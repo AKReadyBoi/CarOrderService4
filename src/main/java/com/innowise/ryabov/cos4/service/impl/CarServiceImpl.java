@@ -8,14 +8,18 @@ import com.innowise.ryabov.cos4.repository.CarRepository;
 import com.innowise.ryabov.cos4.request.CarRequest;
 import com.innowise.ryabov.cos4.service.CarService;
 import com.innowise.ryabov.cos4.util.CarNotFoundException;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 @Transactional
 @Service
 @AllArgsConstructor
+@Validated
 public class CarServiceImpl implements CarService {
     CarRepository carRepository;
     CarMapper mapper;
@@ -28,12 +32,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void saveCar(CarRequest car) {
+    public void saveCar(@Valid CarRequest car) {
         carRepository.save(mapper.carRequestToCar(car));
     }
 
     @Override
-    public CarDTO updateCar(Long id, CarRequest carRequest) {
+    public CarDTO updateCar(Long id, @Valid CarRequest carRequest) {
         Car car = findSafe(id);
         car.setBrand(carRequest.brand());
         car.setModel(carRequest.model());
