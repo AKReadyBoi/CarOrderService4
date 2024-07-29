@@ -11,6 +11,7 @@ public class PaymentNotFoundExceptionHandler {
     @ExceptionHandler(PaymentNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleUserNotFound(PaymentNotFoundException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(ex.getMessage());
     }
 }
