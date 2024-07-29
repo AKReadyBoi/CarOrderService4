@@ -5,6 +5,7 @@ import com.innowise.ryabov.cos4.entity.Car;
 import com.innowise.ryabov.cos4.mapper.CarMapper;
 import com.innowise.ryabov.cos4.repository.CarRepository;
 import com.innowise.ryabov.cos4.request.CarRequest;
+import com.innowise.ryabov.cos4.util.CarNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -96,5 +97,35 @@ class CarServiceImplTest {
         carService.getCar(id);
 
         verify(carRepository, times(1)).findById(id);
+    }
+    @Test
+    void deleteCar_ThrowsCarNotFoundException() {
+        Long id = 1L;
+
+        when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(CarNotFoundException.class, () -> carService.deleteCar(id));
+    }
+    @Test
+    void updateCar_ThrowsCarNotFoundException() {
+        Long id = 1L;
+        CarRequest request = new CarRequest(null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(CarNotFoundException.class, () -> carService.updateCar(id,request));
+    }
+    @Test
+    void getCar_ThrowsCarNotFoundException() {
+        Long id = 1L;
+
+        when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(CarNotFoundException.class, () -> carService.getCar(id));
     }
 }
