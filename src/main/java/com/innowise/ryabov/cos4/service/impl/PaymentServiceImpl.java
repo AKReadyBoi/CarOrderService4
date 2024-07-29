@@ -8,17 +8,14 @@ import com.innowise.ryabov.cos4.request.PaymentRequest;
 import com.innowise.ryabov.cos4.service.PaymentService;
 import com.innowise.ryabov.cos4.util.PaymentNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 @Service
 @Transactional
 @AllArgsConstructor
-@Validated
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper mapper;
@@ -32,12 +29,12 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void savePayment(@Valid PaymentRequest paymentRequest) {
+    public void savePayment(PaymentRequest paymentRequest) {
         paymentRepository.save(mapper.paymentRequestToPayment(paymentRequest));
     }
 
     @Override
-    public PaymentDTO updatePayment(Long id, @Valid PaymentRequest paymentRequest) {
+    public PaymentDTO updatePayment(Long id, PaymentRequest paymentRequest) {
         Payment payment = findSafe(id);
         payment.setPaymentDate(paymentRequest.paymentDate());
         payment.setUrl(paymentRequest.url());

@@ -3,6 +3,7 @@ package com.innowise.ryabov.cos4.controller;
 import com.innowise.ryabov.cos4.dto.PaymentDTO;
 import com.innowise.ryabov.cos4.request.PaymentRequest;
 import com.innowise.ryabov.cos4.service.PaymentService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,7 +26,7 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.getPayment(id));
     }
     @PostMapping("/save")
-    public ResponseEntity<HttpStatus> savePayment(@RequestBody PaymentRequest paymentRequest) {
+    public ResponseEntity<HttpStatus> savePayment(@RequestBody @Valid PaymentRequest paymentRequest) {
         paymentService.savePayment(paymentRequest);
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
