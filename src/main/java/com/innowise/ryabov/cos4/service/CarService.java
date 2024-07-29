@@ -9,7 +9,6 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Service
-@Validated
 public interface CarService {
     List<CarDTO> getAllCars();
     void saveCar(CarRequest car);

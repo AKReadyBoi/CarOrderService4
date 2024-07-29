@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Service
-@Validated
 public interface UserService {
     List<UserDTO> getAllUsers();
     void saveUser(UserRequest user);

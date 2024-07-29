@@ -19,7 +19,6 @@ import java.util.List;
 @Transactional
 @Service
 @AllArgsConstructor
-@Validated
 public class CarServiceImpl implements CarService {
     CarRepository carRepository;
     CarMapper mapper;
