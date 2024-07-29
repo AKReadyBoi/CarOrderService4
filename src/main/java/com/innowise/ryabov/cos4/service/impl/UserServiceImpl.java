@@ -33,12 +33,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(@Valid UserRequest user) {
+    public void saveUser(UserRequest user) {
         userRepository.save(mapper.userRequestToUser(user));
     }
 
     @Override
-    public UserDTO updateUser(Long id, @Valid UserRequest userRequest) {
+    public UserDTO updateUser(Long id, UserRequest userRequest) {
         Users user = findSafe(id);
         user.setFirstname(userRequest.firstname());
         user.setLastname(userRequest.lastname());

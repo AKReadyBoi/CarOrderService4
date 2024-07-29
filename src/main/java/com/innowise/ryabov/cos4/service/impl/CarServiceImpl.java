@@ -32,12 +32,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void saveCar(@Valid CarRequest car) {
+    public void saveCar(CarRequest car) {
         carRepository.save(mapper.carRequestToCar(car));
     }
 
     @Override
-    public CarDTO updateCar(Long id, @Valid CarRequest carRequest) {
+    public CarDTO updateCar(Long id, CarRequest carRequest) {
         Car car = findSafe(id);
         car.setBrand(carRequest.brand());
         car.setModel(carRequest.model());

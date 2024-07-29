@@ -11,8 +11,8 @@ import java.util.List;
 @Validated
 public interface UserService {
     List<UserDTO> getAllUsers();
-    void saveUser(@Valid UserRequest user);
-    UserDTO updateUser(Long id,@Valid UserRequest userRequest);
+    void saveUser(UserRequest user);
+    UserDTO updateUser(Long id,UserRequest userRequest);
     void deleteUser(Long id);
     UserDTO getUser(Long id);
 

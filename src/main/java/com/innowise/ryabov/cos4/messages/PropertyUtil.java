@@ -24,6 +24,7 @@ public class PropertyUtil {
     public static final String EMAIL_MUST_BE_VALID = "Email must be valid";
     public static final String PASSPORT_ID_MUST_BE_VALID = "Passport id must be valid";
     public static final String PHONE_NUMBER_MUST_BE_VALID = "Phone number must be valid";
-
+    public static final String THIS_PASSPORT_ID_IS_ALREADY_EXISTING = "This passport id is already existing";
+    public static final String THIS_PHONE_NUMBER_IS_ALREADY_EXISTING = "This phone number is already existing";
 
 }

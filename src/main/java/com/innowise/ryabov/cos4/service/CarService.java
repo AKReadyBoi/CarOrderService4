@@ -12,8 +12,8 @@ import java.util.List;
 @Validated
 public interface CarService {
     List<CarDTO> getAllCars();
-    void saveCar(@Valid CarRequest car);
-    CarDTO updateCar(Long id, @Valid CarRequest carRequest);
+    void saveCar(CarRequest car);
+    CarDTO updateCar(Long id, CarRequest carRequest);
     void deleteCar(Long id);
     CarDTO getCar(Long id);
 }

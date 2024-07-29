@@ -11,11 +11,15 @@ import java.lang.reflect.Method;
 @Component
 public class UniqueValueValidator implements ConstraintValidator<UniqueValue, String> {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
     private Class<?> repositoryClass;
     private Object repository;
     private String field;
+
+    public UniqueValueValidator(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
     @Override
     public void initialize(UniqueValue constraintAnnotation) {
         this.repositoryClass = constraintAnnotation.repository();
