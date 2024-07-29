@@ -11,6 +11,7 @@ public class NotUniqueValueExceptionHandler {
     @ExceptionHandler(NotUniqueValueException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleUserNotFound(NotUniqueValueException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(ex.getMessage());
     }
 }
