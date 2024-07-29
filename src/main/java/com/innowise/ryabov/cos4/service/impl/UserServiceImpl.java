@@ -8,9 +8,12 @@ import com.innowise.ryabov.cos4.request.UserRequest;
 import com.innowise.ryabov.cos4.service.UserService;
 import com.innowise.ryabov.cos4.util.UserNotFoundException;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 @Service
@@ -38,6 +41,10 @@ public class UserServiceImpl implements UserService {
         Users user = findSafe(id);
         user.setFirstname(userRequest.firstname());
         user.setLastname(userRequest.lastname());
+        user.setEmail(userRequest.email());
+        user.setDrivingLicenseId(userRequest.drivingLicenseId());
+        user.setPhoneNumber(userRequest.phoneNumber());
+        user.setPassportId(userRequest.passportId());
         return mapper.userToUserDTO(user);
     }
 

@@ -1,9 +1,10 @@
 package com.innowise.ryabov.cos4.entity;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-import java.util.Date;
+import lombok.experimental.FieldDefaults;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder(toBuilder = true)
@@ -19,7 +20,9 @@ public class Users {
     String lastname;
     String email;
     String phoneNumber;
-    Date creationDate;
+    LocalDate creationDate;
     String passportId;
     String drivingLicenseId;
+    @OneToMany(mappedBy = "user")
+    List<Car> cars;
 }

@@ -11,6 +11,7 @@ public class CarNotFoundExceptionHandler {
     @ExceptionHandler(CarNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleUserNotFound(CarNotFoundException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        return ResponseEntity.badRequest()
+                .body(ex.getMessage());
     }
 }

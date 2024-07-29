@@ -9,4 +9,8 @@ import lombok.experimental.FieldDefaults;
 public class UserDTO {
     String firstname;
     String lastname;
+    String drivingLicenseId;
+    String email;
+    String passportId;
+    String phoneNumber;
 }
