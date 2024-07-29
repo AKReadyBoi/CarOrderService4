@@ -1,14 +1,17 @@
 package com.innowise.ryabov.cos4.service.impl;
 import com.innowise.ryabov.cos4.dto.UserDTO;
+import com.innowise.ryabov.cos4.entity.Car;
 import com.innowise.ryabov.cos4.entity.Users;
 import com.innowise.ryabov.cos4.mapper.UserMapper;
 import com.innowise.ryabov.cos4.repository.UserRepository;
+import com.innowise.ryabov.cos4.request.CarRequest;
 import com.innowise.ryabov.cos4.request.UserRequest;
 import com.innowise.ryabov.cos4.util.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,16 +46,28 @@ class UserServiceImplTest {
 
     @Test
     void saveUser() {
-        Users user = new Users();
+        UserRequest request = new UserRequest(FIRST,
+                LAST,
+                null,
+                null,
+                null,
+                null);
 
-        userService.saveUser(user);
+        when(mapper.userRequestToUser(request)).thenReturn(new Users());
+
+        userService.saveUser(request);
 
         verify(userRepository, times(1)).save(any(Users.class));
     }
     @Test
         void updateUser_ThrowsUserNotFoundException() {
             Long id = 1L;
-            UserRequest request = new UserRequest(FIRST, LAST);
+            UserRequest request = new UserRequest(FIRST,
+                                  LAST,
+                    null,
+                            null,
+                        null,
+                     null);
 
             when(userRepository.findById(id)).thenReturn(Optional.empty());
 
@@ -69,19 +84,24 @@ class UserServiceImplTest {
 
     @Test
     void updateUser() {
-        Long userId = 1L;
+        Long id = 1L;
+        UserRequest request = new UserRequest("brand",
+                "model",
+                null,
+                "plateNumber",
+                null,
+                null
+        );
         Users user = new Users();
-        user.setFirstname(FIRST);
-        user.setLastname(LAST);
-        UserRequest userRequest = new UserRequest(TEST, TEST);
 
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(userRepository.findById(Mockito.any())).thenReturn(Optional.of(user));
 
-        Users updatedUser = userService.updateUser(userId, userRequest);
+        userService.updateUser(id, request);
 
-        verify(userRepository, times(1)).findById(userId);
-        assertEquals(TEST, updatedUser.getFirstname());
-        assertEquals(TEST, updatedUser.getLastname());
+        assertEquals(request.drivingLicenseId(), user.getDrivingLicenseId());
+        assertEquals(request.email(), user.getEmail());
+        assertEquals(request.phoneNumber(), user.getPhoneNumber());
+        assertEquals(request.firstname(), user.getFirstname());
     }
 
     @Test
