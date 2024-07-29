@@ -5,7 +5,6 @@ import com.innowise.ryabov.cos4.entity.Payment;
 import com.innowise.ryabov.cos4.mapper.PaymentMapper;
 import com.innowise.ryabov.cos4.repository.PaymentRepository;
 import com.innowise.ryabov.cos4.request.PaymentRequest;
-import com.innowise.ryabov.cos4.service.PaymentService;
 import com.innowise.ryabov.cos4.util.PaymentNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +25,7 @@ class PaymentServiceImplTest {
     @Mock
     PaymentRepository paymentRepository;
     @InjectMocks
-    PaymentService paymentService;
+    PaymentServiceImpl paymentService;
     @Mock
     PaymentMapper mapper;
     @Test
@@ -100,19 +99,31 @@ class PaymentServiceImplTest {
 
     @Test
     void deletePayment_ThrowNotFoundPaymentException() {
+        Long id = 1L;
 
+        when(paymentRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(PaymentNotFoundException.class, () -> paymentService.deletePayment(id));
     }
     @Test
     void getPayment_ThrowNotFoundPaymentException() {
         Long id = 1L;
 
-        when(mapper.paymentToPaymentDTO(any(Payment.class))).thenReturn(new PaymentDTO());
         when(paymentRepository.findById(Mockito.any())).thenReturn(Optional.empty());
 
         assertThrows(PaymentNotFoundException.class, () -> paymentService.getPayment(id));
     }
     @Test
     void updatePayment_ThrowNotFoundPaymentException() {
+        Long id = 1L;
+        PaymentRequest request = new PaymentRequest(null,
+                null,
+                null,
+                null
+        );
 
+        when(paymentRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(PaymentNotFoundException.class, () -> paymentService.updatePayment(id,request));
     }
 }
