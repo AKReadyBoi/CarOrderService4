@@ -1,9 +1,6 @@
 package com.innowise.ryabov.cos4.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -26,4 +23,7 @@ public class Payment {
     URL url;
     BigDecimal paymentAmount;
     LocalDate paymentDate;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
 }
