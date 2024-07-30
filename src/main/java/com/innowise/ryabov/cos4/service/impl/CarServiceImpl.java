@@ -48,8 +48,8 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteCar(Long id) {
-        val user = findSafe(id);
-        carRepository.deleteById(user.getId());
+        val car = findSafe(id);
+        carRepository.deleteById(car.getId());
     }
 
     @Override
