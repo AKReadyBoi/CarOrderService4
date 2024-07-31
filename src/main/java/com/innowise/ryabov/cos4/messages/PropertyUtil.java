@@ -28,4 +28,5 @@ public class PropertyUtil {
     public static final String PHONE_NUMBER_MUST_BE_VALID = "Phone number must be valid";
     public static final String THIS_PASSPORT_ID_IS_ALREADY_EXISTING = "This passport id is already existing";
     public static final String THIS_PHONE_NUMBER_IS_ALREADY_EXISTING = "This phone number is already existing";
+    public static final String BOOKING_NOT_FOUND_MESSAGE = "Booking not found for this id :";
 }
