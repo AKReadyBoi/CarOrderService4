@@ -1,28 +1,28 @@
 package com.innowise.ryabov.cos4.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
-
 import lombok.experimental.FieldDefaults;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-
-@Data
-@Builder(toBuilder = true)
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Users {
+@Builder(toBuilder = true)
+public class Car
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String firstname;
-    String lastname;
-    String email;
-    String phoneNumber;
-    LocalDate creationDate;
-    String passportId;
-    String drivingLicenseId;
-    @OneToMany(mappedBy = "user")
-    List<Car> cars;
+    String brand;
+    String model;
+    LocalDate yearOfProduction;
+    String plateNumber;
+    Boolean isAvailable;
+    BigDecimal dailyFee;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    Users user;
 }
