@@ -73,6 +73,7 @@ class UserServiceImplTest {
 
             assertThrows(UserNotFoundException.class, () -> userService.updateUser(id,request));
         }
+
         @Test
         void deleteUser_ThrowsUserNotFoundException() {
             Long id = 1L;

@@ -8,6 +8,8 @@ public class PropertyUtil {
     public static final String VALIDATION_MESSAGE = "Validation error(s): ";
     public static final String USER_NOT_FOUND_MESSAGE = "User not found for this id : ";
     public static final String INTERNAL_SERVER_ERROR_MESSAGE = "Internal Server Error: ";
+    public static final String PAYMENT_NOT_FOUND_MESSAGE = "Payment not found for this id : ";
+    public static final String DAILY_FEE_MUST_BE_A_POSITIVE_VALUE = "Daily fee must be a positive value";
     public static final String CAR_NOT_FOUND_MESSAGE = "Car not found for this id : ";
     public static final String BRAND_MUST_BE_VALID = "Brand must be valid";
     public static final String MODEL_MUST_BE_VALID = "Model must be valid";
@@ -26,5 +28,4 @@ public class PropertyUtil {
     public static final String PHONE_NUMBER_MUST_BE_VALID = "Phone number must be valid";
     public static final String THIS_PASSPORT_ID_IS_ALREADY_EXISTING = "This passport id is already existing";
     public static final String THIS_PHONE_NUMBER_IS_ALREADY_EXISTING = "This phone number is already existing";
-
 }
