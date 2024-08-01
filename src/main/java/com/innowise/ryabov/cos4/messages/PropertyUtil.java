@@ -17,7 +17,6 @@ public class PropertyUtil {
     public static final String PLATE_NUMBER_CANNOT_BE_EMPTY = "Plate number cannot be empty";
     public static final String PLATE_NUMBER_DOES_NOT_MATCH_BELORUSSIAN_PATTERN = "Plate number does not match belorussian pattern";
     public static final String DAILY_FEE_CANNOT_BE_ZERO = "Daily fee cannot be zero";
-    public static final String DAILY_FEE_MUST_BE_A_POSITIVE_VALUE = "Daily fee must be a positive value";
     public static final String FIRSTNAME_CANNOT_BE_EMPTY = "Firstname cannot be empty";
     public static final String LASTNAME_CANNOT_BE_EMPTY = "Lastname cannot be empty";
     public static final String YEAR_OF_PRODUCTION_MUST_MATCH_DATE_PATTERN_YYYY_MM_DD = "Year of production must match date pattern(yyyy-MM-dd)";
